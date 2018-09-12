@@ -6,17 +6,20 @@ $(document).ready(() => {
       url: "/scrape"
     })
     .then ((data) => {
-      console.log("articles scraped")
+      $.ajax({
+        method: "GET",
+        url: "/"
+      })
     })
   })
 
 
   // Whenever someone clicks a p tag
-  $(document).on("click", "p", () => {
+  $(".more-info").on("click", () => {
     // Empty the notes from the note section
-    $("#notes").empty();
+    // $("#notes").empty();
     // Save the id from the p tag
-    var thisId = $(this).attr("data-id");
+    const thisId = $(this).attr("data-id");
 
     // Now make an ajax call for the Article
     $.ajax({

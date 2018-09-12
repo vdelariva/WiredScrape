@@ -10,6 +10,9 @@ h1 {
   /* font-weight: 400; */
   /* font-size: 45px; */
 }
+.more-info {
+  cursor: pointer;
+}
 #wrapper {
   width: 960px;
   margin-left: auto;
