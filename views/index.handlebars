@@ -8,15 +8,29 @@
 </nav>
 
 <div id="wrapper">
-  <h2>Most Popular</h2>
-  <div id="articles">
-    {{#each articles}}
-      <h3 data-id={{this._id}}>{{this.headline}}</h3>
-      <p>{{this.link}}</p>
-      <p>Summary: {{this.summary}}</p>
-      <p>{{this.imageURL}}</p>
-      <p>{{this.articleDate}}</p>
-    {{/each}}
+  <div class="row">
+    <div class="col">
+      <h1>Most Popular</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div id="articles">
+        <div class="card-columns">
+        {{#each articles}}
+          <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+            <img class="card-img-top" src="{{this.imageURL}}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title" data-id={{this._id}}>{{this.headline}}</h5>
+              <p class="card-text">{{this.summary}}</p>
+              <p class="card-text">{{this.articleDate}}</p>
+              <a href="{{this.link}}" class="card-link">Link to Article</a><span><i class="fas fa-ellipsis-v more-info" style="float:right"></i></span>
+            </div>
+          </div>
+        {{/each}}
+        </div>
+      </div>
+    </div>
   </div>
   <div id="notes"></div>
 </div>

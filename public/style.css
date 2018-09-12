@@ -1,12 +1,14 @@
-/* font-family: 'Merriweather', serif;
-font-family: 'Open Sans', sans-serif; */
+/* font-family: 'Londrina Solid', cursive; */
+
 
 body { 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  background-color: rgba(0,0,0,0.035);
 }
-h2 {
-  font-family: ambroise-francois-std,"Bodoni 72",Didot,"Hoe­fler Text",serif;
-  font-weight: 400;
+h1 {
+  font-family: 'Londrina Solid', cursive;
+  /* font-weight: 400; */
+  /* font-size: 45px; */
 }
 #wrapper {
   width: 960px;
@@ -17,8 +19,8 @@ h2 {
 #articles {
   display: inline-block;
   overflow: auto;
-  width: 60%;
-  height: 700px;
+  /* width: 60%; */
+  /* height: 700px; */
 }
 #notes {
   float: right;
