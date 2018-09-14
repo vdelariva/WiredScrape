@@ -11,12 +11,6 @@ mongoose.connect("mongodb://localhost/wiredDB");
 module.exports = (app) => {
   // Routes
 
-  // Default route
-  app.get("/", function(req, res) {
-    res.render("index")
-
-  });
-
   app.get("/saved", function(req,res){
     db.Article.find({})
     .then(function(dbArticle) {
@@ -29,8 +23,8 @@ module.exports = (app) => {
     });
   });
 
-  // A GET route for scraping the Wired Magazine website/Most Popular Articles
-  app.get("/search", function(req, res) {
+  // Default route will scrape the Wired Magazine website/Most Popular Articles
+  app.get("/", function(req, res) {
     // First, grab the body of the html with request
     axios.get("https://www.wired.com/most-popular/").then((response) => {
       // Then, load that into cheerio and save it to $ for a shorthand selector

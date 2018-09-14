@@ -17,7 +17,6 @@
         <a class="nav-link" href="/saved">Saved Articles</a>
       </li>
     </ul>
-    <button id="scrape" class="btn btn-outline-white text-primary my-2 my-sm-0" type="submit">Scrape</button>
   </div>
 </nav>
 
@@ -41,7 +40,7 @@
                 <a href="{{this.link}}" class="card-link">Link to Article</a>
                 <span style="float:right">
                 {{#if this._id}}
-                  <i class="far fa-edit add-note"></i>
+                  <i class="far fa-edit add-note" data-id="{{this._id}}"></i>
                   <i class="far fa-trash-alt delete-article" data-id="{{this._id}}" data-toggle="modal" data-target="#noteModal"></i>
                 {{else}}
                   <i class="fas fa-plus add-article" data-headline="{{this.headline}}" data-link="{{this.link}}" data-summary="{{this.summary}}" data-imageURL="{{this.imageURL}}" data-articleDate="{{this.articleDate}}"  data-toggle="modal" data-target="#noteModal"></i>

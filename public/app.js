@@ -1,16 +1,17 @@
 $(document).ready(() => {
   // Click on Scrape button
-  $("#scrape").on("click", (event) => {
-    event.preventDefault();
+  // $("#scrape").on("click", function (event) {
+  //   event.preventDefault();
 
-    $.ajax({
-      method: "GET",
-      url: "/search"
-    })
-    .then ((data) => {
-      window.location.replace("/search")
-    })
-  })
+  //   $.ajax({
+  //     method: "GET",
+  //     url: "/search"
+  //   })
+  //   .then ((data) => {
+  //     window.location.replace("/search")
+  //     console.log("scraped")
+  //   })
+  // })
 
   $(".add-article").on("click", function(event) {
     event.preventDefault();
@@ -49,17 +50,19 @@ $(document).ready(() => {
     })
   })
 
-  // Whenever someone clicks a p tag
-  $(".more-info").on("click", () => {
+  // Add note to article
+  $(".add-note").on("click", function (event) {
+    event.preventDefault();
+
     // Empty the notes from the note section
-    // $("#notes").empty();
+    $("#notes").empty();
     // Save the id from the p tag
-    const thisId = $(this).attr("data-id");
+    const id = $(this).attr("data-id");
 
     // Now make an ajax call for the Article
     $.ajax({
       method: "GET",
-      url: "/articles/" + thisId
+      url: `/articles/${id}`
     })
       // With that done, add the note information to the page
       .then(function(data) {
