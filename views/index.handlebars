@@ -1,36 +1,55 @@
 <!-- Navbar -->
-<nav class="navbar navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-primary">
+  <a class="navbar-brand" href="/">
     <img src="img/wiredLogo.png" width="30" height="30" class="d-inline-block align-top" alt="">
     Wired ∙ Web Scrapper
   </a>
-  <button id="scrape" class="btn btn-outline-white text-primary my-2 my-sm-0" type="submit">Scrape</button>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/saved">Saved Articles</a>
+      </li>
+    </ul>
+    <button id="scrape" class="btn btn-outline-white text-primary my-2 my-sm-0" type="submit">Scrape</button>
+  </div>
 </nav>
 
 <div id="wrapper">
   <div class="row">
     <div class="col">
-      <h1>Most Popular</h1>
+      {{!-- <h1>Most Popular</h1> --}}
     </div>
   </div>
   <div class="row">
     <div class="col">
       <div id="articles">
         <div class="card-columns">
-        {{#each articles}}
-          <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
-            <img class="card-img-top" src="{{this.imageURL}}" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title" data-id={{this._id}}>{{this.headline}}</h5>
-              <p class="card-text">{{this.summary}}</p>
-              <p class="card-text">{{this.articleDate}}</p>
-              <a href="{{this.link}}" class="card-link">Link to Article</a>
-              <span>
-                <i class="fas fa-ellipsis-v more-info" data-id= "{{this._id}}" data-headline="{{this.headline}}" data-toggle="modal" data-target="#noteModal" style="float:right"></i>
-              </span>
+          {{#each articles}}
+            <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+              <img class="card-img-top" src="{{this.imageURL}}" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title" data-id={{this._id}}>{{this.headline}}</h5>
+                <p class="card-text">{{this.summary}}</p>
+                <p class="card-text">{{this.articleDate}}</p>
+                <a href="{{this.link}}" class="card-link">Link to Article</a>
+                <span style="float:right">
+                {{#if this._id}}
+                  <i class="far fa-edit add-note"></i>
+                  <i class="far fa-trash-alt delete-article" data-id="{{this._id}}" data-toggle="modal" data-target="#noteModal"></i>
+                {{else}}
+                  <i class="fas fa-plus add-article" data-headline="{{this.headline}}" data-link="{{this.link}}" data-summary="{{this.summary}}" data-imageURL="{{this.imageURL}}" data-articleDate="{{this.articleDate}}"  data-toggle="modal" data-target="#noteModal"></i>
+                {{/if}}
+                </span>
+              </div>
             </div>
-          </div>
-        {{/each}}
+          {{/each}}
         </div>
       </div>
     </div>
@@ -43,13 +62,13 @@
     {{!-- Modal content --}}
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">{{modal.title}}</h4>
+        <h4 class="modal-title"></h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
       </div>
       <div class="modal-footer">
-        <button type="button" id="submitTest" class="btn btn-dark" data-dismiss="modal" data-key="">Submit</button>
+        <button type="button" id="submitNote" class="btn btn-dark" data-dismiss="modal" data-key="">Submit</button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
       </div>
     </div>

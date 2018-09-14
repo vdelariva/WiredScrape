@@ -1,18 +1,53 @@
 $(document).ready(() => {
   // Click on Scrape button
-  $("#scrape").on("click", () => {
+  $("#scrape").on("click", (event) => {
+    event.preventDefault();
+
     $.ajax({
       method: "GET",
-      url: "/scrape"
+      url: "/search"
     })
     .then ((data) => {
-      $.ajax({
-        method: "GET",
-        url: "/"
-      })
+      window.location.replace("/search")
     })
   })
 
+  $(".add-article").on("click", function(event) {
+    event.preventDefault();
+
+    // Save the article to the data base
+    const article = {
+        headline: $(this).attr("data-headline"),
+        link: $(this).attr("data-link"),
+        summary: $(this).attr("data-summary"),
+        imageURL: $(this).attr("data-imageURL"),
+        articleDate: $(this).attr("data-articleDate")
+    }
+    // console.log(`article: ${JSON.stringify(article)}`)
+    $.ajax({
+      method: "POST",
+      url: "/saveArticle",
+      data: article
+    })
+    .then ((data) => {
+      // Display modal with 'article saved
+      $(".modal-title").text("Article Saved!")
+    })
+  })
+
+  $(".delete-article").on("click", function(event) {
+    event.preventDefault();
+
+    const id = $(this).attr("data-id")
+    $.ajax({
+      method: "DELETE",
+      url: `/deleteArticle/${id}`
+    })
+    .then ((data) => {
+      console.log("article deleted")
+      location.reload();
+    })
+  })
 
   // Whenever someone clicks a p tag
   $(".more-info").on("click", () => {
