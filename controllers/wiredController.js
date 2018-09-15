@@ -13,6 +13,8 @@ mongoose.connect("mongodb://localhost/wiredDB");
 module.exports = (app) => {
   // Routes
 
+  // GET Routes
+  //--------------------------------------------------------------------------------------------------------------------------
   // Default route will scrape the Wired Magazine website/Most Popular Articles page
   app.get("/", (req, res) =>  {
     // First, grab the body of the html with request
@@ -72,33 +74,6 @@ module.exports = (app) => {
     });
   });
 
- // Delete article from db
-  app.delete("/article/:id", function(req,res) {
-    db.Article.deleteOne({"_id":req.params.id})
-    .then(function(response){
-      console.log("article deleted")
-      res.end()
-    })
-  })
-
-
-
-
-  // // Route for getting all Articles from the db
-  // app.get("/articles", function(req, res) {
-  //   // Grab every document in the Articles collection
-  //   db.Article.find({})
-  //   .then(function(dbArticle) {
-  //     // Successfully found Articles, send them back to the client
-  //     // res.json(dbArticle);
-  //     res.render("index", {articles:dbArticle});
-  //   })
-  //   .catch(function(err) {
-  //     // If an error occurred, send it to the client
-  //     res.json(err);
-  //   });
-  // });
-
   // Route for getting all the notes for a specific article
   app.get("/notes/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
@@ -108,7 +83,6 @@ module.exports = (app) => {
       .then(function(dbNotes) {
         // If we were able to successfully find an Article with the given id, send it back to the client
         console.log(`all notes: ${dbNotes}`)
-        // res.render("index", {notes:dbNotes});
         res.json(dbNotes)
       })
       .catch(function(err) {
@@ -117,6 +91,8 @@ module.exports = (app) => {
       });
   });
 
+  // POST Routes
+  //--------------------------------------------------------------------------------------------------------------------------
   // Route for saving an Article
   app.post("/saveArticle", (req,res) => {
     db.Article.find({headline:req.body.headline})
@@ -144,11 +120,8 @@ module.exports = (app) => {
   // Route for saving an Article's associated Note
   app.post("/note", function(req, res) {
     // Create a new note and pass the req.body to the entry
-    console.log("req.body")
-    console.log(req.body)
     db.Note.create(req.body)
       .then(function(dbNote) {
-        console.log(`new note: ${dbNote}`)
         res.json(dbNote);
       })
       .catch(function(err) {
@@ -156,4 +129,29 @@ module.exports = (app) => {
         res.json(err);
       });
   });
+
+  // DELETE Routes
+  //--------------------------------------------------------------------------------------------------------------------------
+  // Delete article from db
+  app.delete("/article/:id", function(req,res) {
+    db.Article.deleteOne({"_id":req.params.id})   // Delete article
+    .then(function(response){
+      console.log("article deleted")
+      db.Note.deleteMany({"article":req.params.id})   // Delete all associated notes
+      .then (function(response){
+        console.log("notes deleted")
+        res.end()
+      })
+    })
+  })
+
+  // Delete note from db
+  app.delete("/note/:id", function(req,res) {
+    db.Note.deleteOne({"_id":req.params.id})    // Delete note
+    .then(function(response){
+      console.log("note deleted")
+      res.end()
+    })
+  })
+
 } // End of Module Export

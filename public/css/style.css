@@ -10,7 +10,7 @@ h1 {
   /* font-weight: 400; */
   /* font-size: 45px; */
 }
-.add-article, .delete-article, .show-note {
+.add-article, .delete-article, .show-note, .delete-note {
   cursor: pointer;
 }
 #wrapper {
