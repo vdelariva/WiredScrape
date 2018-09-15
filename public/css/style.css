@@ -38,3 +38,10 @@ input {
   height: 36px;
   font-size: 24px;
 }
+.alert{
+  position: relative;
+  margin: 0 auto;
+  font-size: 1.5rem;
+  width: 20%;
+  z-index: 100;
+}

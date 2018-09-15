@@ -107,6 +107,7 @@ module.exports = (app) => {
       // Article already saved in db
       else {
         console.log("Article already in db")
+        res.end();
       }
     })
   })

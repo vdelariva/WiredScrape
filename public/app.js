@@ -11,21 +11,21 @@ $(document).ready(() => {
         imageURL: $(this).attr("data-imageURL"),
         articleDate: $(this).attr("data-articleDate")
     }
+
     $.ajax({
       method: "POST",
       url: "/saveArticle",
       data: article
     })
-    .then ((data) => {
-      // Display modal with 'article saved
-      $("#alert-msg").text("Article Saved!")
-      $(".alert").show();
+    .then ((res) => {
+      // Display alert informing that the article was saved
+      if (res === 'status 200') {
+        displayAlert("Article Saved!","green");
+      }
+      else {
+        displayAlert("Article already saved","red")
+      }
     })
-  })
-
-  // Close alert
-  $('.close').click(function() {
-    $('.alert').hide();
   })
 
   // Delete article
@@ -40,6 +40,7 @@ $(document).ready(() => {
     .then ((data) => {
       console.log("article deleted")
       location.reload();
+      displayAlert("Article Deleted!","green");
     })
   })
 
@@ -84,8 +85,8 @@ $(document).ready(() => {
       $(".modal-body").append(notes);
 
       const addComment = `<form>
-          <textarea id="bodyInput" class="form-control-sm" placeholder="Add comments..." rows="3"></textarea>
-          <textarea id="nameInput" class="form-control-sm" placeholder="Your name"></textarea>
+          <textarea id="bodyInput" class="form-control-sm shadow p-3 mb-5 bg-white rounded border-0" placeholder="Add comments..." rows="3"></textarea>
+          <textarea id="nameInput" class="form-control-sm shadow p-3 mb-5 bg-white rounded border-0" placeholder="Your name"></textarea>
         </form>`
 
       $(".modal-body").append(addComment);
@@ -112,6 +113,7 @@ $(document).ready(() => {
       .then(function(data) {
         // Log the response
         console.log(data);
+        displayAlert("Note Saved!","green");
         // Empty the notes section
         $("#modal-body").empty();
       });
@@ -120,7 +122,6 @@ $(document).ready(() => {
     $("#nameInput").val("");
     $("#bodyInput").val("");
   });
-})
 
 // Delete note
 $(document).on("click", ".delete-note", function(event) {
@@ -134,6 +135,27 @@ $(document).on("click", ".delete-note", function(event) {
   .then ((data) => {
     console.log("note deleted")
     location.reload();
+    displayAlert("Note Deleted!","green");
   })
 })
 
+  // Set alert position
+  // Find scrolling distance from top, set alert positon so that it appears in the window
+  $(window).scroll(function(){
+    $('.alert').css({"top": $(window).scrollTop() + 200})
+  })
+
+  // Close alert
+  $('.close').click(function() {
+    $('.alert').hide();
+  })
+
+  function displayAlert(msg,msgColor) {
+    $("#alert-msg").text(msg)
+    $(".alert").css({"background-color":msgColor})
+    $(".alert").show();
+    setTimeout(closeAlert,2000);
+  }
+
+  function closeAlert(){$('.alert').hide();}
+})
