@@ -14,11 +14,17 @@
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/saved">Saved Articles</a>
+        <a class="nav-link" href="/articles">Saved Articles</a>
       </li>
     </ul>
   </div>
 </nav>
+
+{{!-- Alert element --}}
+	<div class="alert alert-danger collapse mt-2" role="alert">
+		<a href="#" class="close">&times;</a>
+		<p id="alert-msg"></p>
+	</div>
 
 <div id="wrapper">
   <div class="row">
@@ -40,10 +46,10 @@
                 <a href="{{this.link}}" class="card-link">Link to Article</a>
                 <span style="float:right">
                 {{#if this._id}}
-                  <i class="far fa-edit add-note" data-id="{{this._id}}"></i>
-                  <i class="far fa-trash-alt delete-article" data-id="{{this._id}}" data-toggle="modal" data-target="#noteModal"></i>
+                  <i class="far fa-edit show-note" data-id="{{this._id}}" data-headline="{{this.headline}}" data-toggle="modal" data-target="#noteModal"></i>
+                  <i class="far fa-trash-alt delete-article" data-id="{{this._id}}"></i>
                 {{else}}
-                  <i class="fas fa-plus add-article" data-headline="{{this.headline}}" data-link="{{this.link}}" data-summary="{{this.summary}}" data-imageURL="{{this.imageURL}}" data-articleDate="{{this.articleDate}}"  data-toggle="modal" data-target="#noteModal"></i>
+                  <i class="fas fa-plus add-article" data-headline="{{this.headline}}" data-link="{{this.link}}" data-summary="{{this.summary}}" data-imageURL="{{this.imageURL}}" data-articleDate="{{this.articleDate}}"></i>
                 {{/if}}
                 </span>
               </div>
@@ -56,21 +62,21 @@
   <div id="notes"></div>
 </div>
 
-<div id="noteModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    {{!-- Modal content --}}
+<div id="noteModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title"></h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h5 class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
       </div>
       <div class="modal-footer">
-        <button type="button" id="submitNote" class="btn btn-dark" data-dismiss="modal" data-key="">Submit</button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="savenote" class="btn btn-primary" data-id="" data-dismiss="modal">Save comment</button>
       </div>
     </div>
   </div>
 </div>
-
