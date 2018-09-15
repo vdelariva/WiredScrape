@@ -20,7 +20,7 @@ module.exports = (app) => {
 
       // Now, grab every li with class arhive-item-component and build object to render:
       $("li.archive-item-component").each(function(i, element) {
-        // Add the text, href, summary, author & read time of every article, and save them as properties of the result object
+        // Add the headline, href, summary, image URL & article date for every article, and save them as properties of the result object
         articles.push({
           headline: $(element)
             .children("div")
@@ -48,14 +48,14 @@ module.exports = (app) => {
             .children("div")
             .children("time")
             .text()
-        })
+        });
       });
       // Successfully scraped, render the articles
       res.render("index", {articles:articles})
     });
   });
 
-  // Retrieve saved articles from db
+  // Route to retrieve saved articles from db
   app.get("/articles", function(req,res){
     db.Article.find({}).sort({articleDate:-1})
     .then(function(dbArticle) {
@@ -75,8 +75,7 @@ module.exports = (app) => {
       // ..and populate all of the notes associated with it
       .populate("article")
       .then(function(dbNotes) {
-        // If we were able to successfully find an Article with the given id, send it back to the client
-        console.log(`all notes: ${dbNotes}`)
+        // If we were able to successfully find all the notes for a given article, send it back to the client
         res.json(dbNotes)
       })
       .catch(function(err) {
@@ -97,7 +96,7 @@ module.exports = (app) => {
         .then(function(dbArticle) {
           // View the added result in the console
           console.log(dbArticle);
-          res.send("status 200")
+          res.send("status 200");
         })
         .catch(function(err) {
           // If an error occurred, send it to the client
@@ -106,7 +105,7 @@ module.exports = (app) => {
       }
       // Article already saved in db
       else {
-        console.log("Article already in db")
+        console.log("Article already in db");
         res.end();
       }
     })
@@ -131,11 +130,11 @@ module.exports = (app) => {
   app.delete("/article/:id", function(req,res) {
     db.Article.deleteOne({"_id":req.params.id})   // Delete article
     .then(function(response){
-      console.log("article deleted")
+      console.log("article deleted");
       db.Note.deleteMany({"article":req.params.id})   // Delete all associated notes
       .then (function(response){
-        console.log("notes deleted")
-        res.end()
+        console.log("notes deleted");
+        res.end();
       })
     })
   })
@@ -144,8 +143,8 @@ module.exports = (app) => {
   app.delete("/note/:id", function(req,res) {
     db.Note.deleteOne({"_id":req.params.id})    // Delete note
     .then(function(response){
-      console.log("note deleted")
-      res.end()
+      console.log("note deleted");
+      res.end();
     })
   })
 

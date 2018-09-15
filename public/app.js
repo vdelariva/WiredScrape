@@ -1,5 +1,6 @@
 $(document).ready(() => {
 
+  // Event listener to save article to database
   $(".add-article").on("click", function(event) {
     event.preventDefault();
 
@@ -23,12 +24,12 @@ $(document).ready(() => {
         displayAlert("Article Saved!","green");
       }
       else {
-        displayAlert("Article already saved","red")
+        displayAlert("Article already saved","red");
       }
     })
   })
 
-  // Delete article
+  // Event listener to delete article
   $(".delete-article").on("click", function(event) {
     event.preventDefault();
 
@@ -38,24 +39,23 @@ $(document).ready(() => {
       url: `/article/${id}`
     })
     .then ((data) => {
-      console.log("article deleted")
+      console.log("article deleted");
       location.reload();
       displayAlert("Article Deleted!","green");
     })
   })
 
-  // Show article note
+  // Event listener to show article notes
   $(".show-note").on("click", function (event) {
     event.preventDefault();
 
     // Empty the notes from the note section
     $(".modal-body").empty();
-    $(".modal-title").text($(this).attr("data-headline"))
-    $("#savenote").attr("data-id",$(this).attr("data-id"))
+    $(".modal-title").text($(this).attr("data-headline"));
+    $("#savenote").attr("data-id",$(this).attr("data-id"));
 
     // Save the article id from note class
     const articleId = $(this).attr("data-id");
-
 
     // Now make an ajax call for the notes
     $.ajax({
@@ -67,11 +67,7 @@ $(document).ready(() => {
       console.log(`get notes/id: ${JSON.stringify(data)}`);
       let notes = [];
       data.forEach((note) =>{
-        console.log(`note: ${JSON.stringify(note)}`)
-        console.log(note.article.headline)
-        console.log(note.body)
-        console.log(note.name)
-        
+        // Create the note card
         const n = `<div class="card shadow p-3 mb-5 bg-white rounded">`
           + `<div class="card-body">`
           + `<blockquote class="blockquote mb-0">`
@@ -82,22 +78,24 @@ $(document).ready(() => {
         notes.push(n);
       })
       
+      // Display notes in modal
       $(".modal-body").append(notes);
 
+      // Form to enter comment/name
       const addComment = `<form>
           <textarea id="bodyInput" class="form-control-sm shadow p-3 mb-5 bg-white rounded border-0" placeholder="Add comments..." rows="3"></textarea>
           <textarea id="nameInput" class="form-control-sm shadow p-3 mb-5 bg-white rounded border-0" placeholder="Your name"></textarea>
         </form>`
 
+      // Display form in modal
       $(".modal-body").append(addComment);
     });
   });
 
-  // Save the note
+  // Event listener to save the note
   $(document).on("click", "#savenote", function() {
     // Grab the id associated with the article from the submit button
     var articleId = $(this).attr("data-id");
-    console.log(`articleId: ${articleId}`)
 
     // Save note
     $.ajax({
@@ -123,17 +121,17 @@ $(document).ready(() => {
     $("#bodyInput").val("");
   });
 
-// Delete note
+// Event listener to delete note
 $(document).on("click", ".delete-note", function(event) {
   event.preventDefault();
 
-  const id = $(this).attr("data-id")
+  const id = $(this).attr("data-id");
   $.ajax({
     method: "DELETE",
     url: `/note/${id}`
   })
   .then ((data) => {
-    console.log("note deleted")
+    console.log("note deleted");
     location.reload();
     displayAlert("Note Deleted!","green");
   })
@@ -142,19 +140,19 @@ $(document).on("click", ".delete-note", function(event) {
   // Set alert position
   // Find scrolling distance from top, set alert positon so that it appears in the window
   $(window).scroll(function(){
-    $('.alert').css({"top": $(window).scrollTop() + 200})
+    $('.alert').css({"top": $(window).scrollTop() + 200});
   })
 
-  // Close alert
+  // Event listener to close alert
   $('.close').click(function() {
-    $('.alert').hide();
+    closeAlert();
   })
 
   function displayAlert(msg,msgColor) {
-    $("#alert-msg").text(msg)
-    $(".alert").css({"background-color":msgColor})
+    $("#alert-msg").text(msg);
+    $(".alert").css({"background-color":msgColor});
     $(".alert").show();
-    setTimeout(closeAlert,2000);
+    setTimeout(closeAlert,2000); // Display alert for 2 seconds
   }
 
   function closeAlert(){$('.alert').hide();}
