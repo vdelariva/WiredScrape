@@ -1,13 +1,7 @@
 // Imports
 let axios = require('axios'); // HTTP Request
 let cheerio = require('cheerio'); // Web Scrapper
-let mongoose = require('mongoose'); // MongoDB ORM
 let db = require("../models"); // Require all models
-
-// Set mongoose to leverage built in JavaScript ES6 Promises
-mongoose.Promise = Promise;
-// Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/wiredDB");
 
 // Exports
 module.exports = (app) => {

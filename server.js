@@ -2,7 +2,7 @@ var express = require("express"); // Express Server
 var bodyParser = require("body-parser"); // Post Body Request
 var logger = require("morgan"); // Logger
 let exphbs = require('express-handlebars'); // Templating Engine
-var db = require("./models"); // Require all models
+let mongoose = require('mongoose'); // MongoDB ORM
 
 // Set Default Port for Express and Heroku
 let PORT = process.env.PORT || 3000; 
@@ -17,6 +17,12 @@ app.use(logger("dev"));
 
 // Setup body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Connect to the Mongo DB
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/wiredDB"
+
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
 
 // Setup access to static assets
 app.use(express.static("public"));
