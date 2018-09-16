@@ -10,10 +10,10 @@ The WiredScrape application will automatically scrape https://www.wired.com/most
 
 On the Saved Articles page:
 * The user can view the notes associated with the selected article by clicking on the note icon. Any notes associated with the article will be displayed in a modal. The user may delete a note or add a new note.
-* The user can delete an article by clicking on the trash icon. Deleting an articles will delete all associated article notes.
+* The user can delete an article by clicking on the trash icon. Deleting an article will delete all associated article notes.
 * If the article already exists in the database, the app will not store another entry into the database and display an alert that the article already exists in the database.
 
-When adding/deleting an article or note the app will display an alert. The alert will display for 2 seconds or can be manually dismissed by the user.
+When adding/deleting an article or note, the app will display an alert. The alert will display for 2 seconds or can be manually dismissed by the user.
 
 Link to app deployed on Heroku: [boiling-fortress-69679](https://boiling-fortress-69679.herokuapp.com/)
 
