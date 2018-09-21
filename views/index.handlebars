@@ -38,7 +38,7 @@
       <div id="articles">
         <div class="card-columns">
           {{#each articles}}
-            <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+            <div id="{{this._id}}" class="card shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
               <img class="card-img-top" src="{{this.imageURL}}" alt="Card image cap">
               <div class="card-body">
                 <h5 class="card-title" data-id={{this._id}}>{{this.headline}}</h5>

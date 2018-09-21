@@ -40,7 +40,7 @@ $(document).ready(() => {
     })
     .then ((data) => {
       console.log("article deleted");
-      location.reload();
+      $(`#${id}`).remove();
       displayAlert("Article Deleted!","green");
     })
   })
@@ -68,11 +68,11 @@ $(document).ready(() => {
       let notes = [];
       data.forEach((note) =>{
         // Create the note card
-        const n = `<div class="card shadow p-3 mb-5 bg-white rounded">`
+        const n = `<div id="${note._id}" class="card shadow p-3 mb-5 bg-white rounded">`
           + `<div class="card-body">`
           + `<blockquote class="blockquote mb-0">`
           + `<p class="note-body">${note.body}</p>`
-          + `<footer class="blockquote-footer">${note.name}<span style="float:right"><i class="far fa-trash-alt delete-note" data-id="${note._id}" data-dismiss="modal"></i></span></footer>`
+          + `<footer class="blockquote-footer">${note.name}<span style="float:right"><i class="far fa-trash-alt delete-note" data-id="${note._id}"></i></span></footer>`
           + `</blockquote></div></div>`
 
         notes.push(n);
@@ -132,7 +132,7 @@ $(document).on("click", ".delete-note", function(event) {
   })
   .then ((data) => {
     console.log("note deleted");
-    location.reload();
+    $(`#${id}`).remove();
     displayAlert("Note Deleted!","green");
   })
 })
